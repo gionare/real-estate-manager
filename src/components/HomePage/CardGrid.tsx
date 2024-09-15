@@ -7,7 +7,7 @@ const CardGrid: React.FC = () => {
   const cards = Array(8).fill(null);
 
   return (
-    <div className="grid grid-cols-4 gap-[16px] p-[16px]">
+    <div className="grid grid-cols-4 gap-[20px] p-[16px] max-w-[1600px] mx-auto">
       {cards.map((_, index) => (
         <Card key={index} />
       ))}

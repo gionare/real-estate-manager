@@ -18,7 +18,6 @@ const AgentInfo: React.FC<AgentInfoProps> = ({ avatar, name, surname, email, pho
         {/* Name and Surname */}
         <div>
           <p className="text-lg font-semibold text-[#021526]">
-            RealEstate
             {name} {surname}
           </p>
           {/* Agent Title */}

@@ -3,7 +3,7 @@
 import { Agent, RealEstate, City, Region } from "./types";
 
 const BASE_URL = "https://api.real-estate-manager.redberryinternship.ge/api";
-const AUTH_TOKEN = "9d011621-10af-4128-ba0d-27fb1331419e"; // Your token here
+const AUTH_TOKEN = "9d011621-10af-4128-ba0d-27fb1331419e";
 
 // Utility function to fetch data
 async function fetchData<T>(endpoint: string): Promise<T> {

@@ -1,5 +1,6 @@
 // import { useState } from 'react'
 import "./App.css";
+import AddListingForm from "./components/AddListingPage/AddListing";
 import CardCarousel from "./components/HomeDetailsPage/CardCarousel";
 // import CardCarousel from "./components/HomeDetailsPage/CardCarousel";
 import HomeDetails from "./components/HomeDetailsPage/HomeDetails";
@@ -20,6 +21,7 @@ function App() {
       <CardGrid />
       <HomeDetails />
       <CardCarousel />
+      <AddListingForm agents={[]} />
     </div>
   );
 }

@@ -1,14 +1,20 @@
-// import React from "react";
+import React from "react";
+import { RealEstate } from "../../services/types";
 
-export default function Card() {
+interface CardProps {
+  realEstate: RealEstate;
+}
+
+const Card: React.FC<CardProps> = ({ realEstate }) => {
+  const { image, price, address, city } = realEstate;
   return (
     <div className="w-[384px] h-[455px] relative rounded-[14px] border border-gray-300 shadow-[0_4px_8px_rgba(0,0,0,0.1)] mt-14">
       {/* Card image section */}
-      <img src="your-image.jpg" alt="Card Image" className="w-full h-[307px] rounded-t-[14px] object-cover" />
+      <img src={image} alt="Card Image" className="w-full h-[307px] rounded-t-[14px] object-cover" />
 
       {/* tag section */}
       <div className="absolute top-[23px] left-[23px] w-[90px] h-[26px] flex items-center justify-center gap-[10px] p-[6px] rounded-[15px] bg-[#021526]/50">
-        <span className="w-[70px] h-[14px] text-[12px] font-medium text-white tracking-[0.48px] text-center">Rent</span>
+        <span className="w-[70px] h-[14px] text-[12px] font-medium text-white tracking-[0.48px] text-center">{realEstate.is_rental ? "Rent" : "Sale"}</span>
       </div>
 
       {/* Content Section */}
@@ -18,7 +24,7 @@ export default function Card() {
           {/* Price */}
           <div className="w-full h-[34px] flex items-center text-[28px] font-bold font-[FiraGO] text-[#021526]">
             {/* Price content goes here */}
-            <span className="h-[34px] self-stretch flex-grow-0 text-[28px] font-bold font-fira-go text-left text-[#021526]">80 000 ₾</span>
+            <span className="h-[34px] self-stretch flex-grow-0 text-[28px] font-bold font-fira-go text-left text-[#021526]"> {price.toLocaleString()} ₾</span>
           </div>
 
           {/* Location Frame */}
@@ -26,7 +32,7 @@ export default function Card() {
             <img src="/Icon.png" alt="Location Icon" className="w-[20px] h-[20px] object-contain p-[2px_3px_1.1px_3px]" />
             <span className="w-[208px] h-[19px] text-sm font-medium text-[#021526]">
               {/* Location content goes here */}
-              Location
+              {address}, {city.name}
             </span>
           </div>
         </div>
@@ -54,4 +60,6 @@ export default function Card() {
       </div>
     </div>
   );
-}
+};
+
+export default Card;

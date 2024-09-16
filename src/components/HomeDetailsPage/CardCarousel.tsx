@@ -1,25 +1,46 @@
-import React, { useState } from "react";
-import Card from "../HomePage/Card"; // Import the Card component
+import React, { useEffect, useState } from "react";
+import { getRealEstates } from "../../services/api";
+import { RealEstate } from "../../services/types";
+import Card from "../HomePage/Card";
 
 const CardCarousel: React.FC = () => {
+  const [realEstates, setRealEstates] = useState<RealEstate[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Sample array of cards (you can replace this with real data later)
-  const cards = Array(10).fill(null); // 10 sample cards
+  useEffect(() => {
+    const fetchRealEstates = async () => {
+      try {
+        const data = await getRealEstates();
+        setRealEstates(data);
+      } catch (error) {
+        console.error("Error fetching real estates:", error);
+        setError("Failed to load real estate data");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRealEstates();
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
 
   // Handle left and right navigation
   const handlePrev = () => {
-    setCurrentIndex(currentIndex === 0 ? cards.length - 4 : currentIndex - 4);
+    setCurrentIndex(currentIndex === 0 ? realEstates.length - 4 : currentIndex - 4);
   };
 
   const handleNext = () => {
-    setCurrentIndex(currentIndex === cards.length - 4 ? 0 : currentIndex + 4);
+    setCurrentIndex(currentIndex === realEstates.length - 4 ? 0 : currentIndex + 4);
   };
 
   return (
-    <div className="relative w-[1600px] border">
+    <div className="relative w-[1600px] border mb-36">
       {/* Title */}
-      <div className=" top-0 text-[#021526] text-left text-[32px]">
+      <div className="top-0 text-[#021526] text-left text-[32px]">
         <span>ბინები მსგავს ლოკაციაზე</span>
       </div>
 
@@ -41,10 +62,10 @@ const CardCarousel: React.FC = () => {
             transform: `translateX(-${currentIndex * 100}%)`,
           }}
         >
-          {/* Map through the cards and display them */}
-          {cards.map((_, index) => (
-            <div className="px-2" key={index}>
-              <Card />
+          {/* Map through the real estate items and display them */}
+          {realEstates.slice(currentIndex, currentIndex + 4).map((realEstate) => (
+            <div className="px-2" key={realEstate.id}>
+              <Card realEstate={realEstate} />
             </div>
           ))}
         </div>

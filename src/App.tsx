@@ -1,6 +1,7 @@
 // import { useState } from 'react'
 import "./App.css";
 import CardCarousel from "./components/HomeDetailsPage/CardCarousel";
+// import CardCarousel from "./components/HomeDetailsPage/CardCarousel";
 import HomeDetails from "./components/HomeDetailsPage/HomeDetails";
 import AddButtons from "./components/HomePage/AddButtons";
 import CardGrid from "./components/HomePage/CardGrid";

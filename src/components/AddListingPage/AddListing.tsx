@@ -1,15 +1,16 @@
 // src/components/AddListingForm.tsx
 import React from "react";
-import { useForm } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Agent } from "../../services/types"; // Adjust based on your project structure
+// import { Agent } from "../../services/types";
 import RegionDropdown from "./RegionDropdown";
 import CityDropdown from "./CityDropdown";
+import AgentSelector from "./AgentSelector";
 
 // Validation Schema
 const schema = yup.object({
-  //   is_rental: yup.number().required("Please check"),
+  is_rental: yup.number().required("Please check"),
   zip_code: yup.string().matches(/^\d+$/, "მხოლოდ რიცხვები").required("Postal code is required"),
   address: yup.string().min(2, "მინიმუმ ორი სიმბოლო").required("Address is required"),
   region: yup.string(),
@@ -29,7 +30,7 @@ const schema = yup.object({
 });
 
 interface FormData {
-  //   is_rental: number;
+  is_rental: number;
   zip_code: string;
   address: string;
   region?: string;
@@ -42,22 +43,19 @@ interface FormData {
   agent_id: string;
 }
 
-interface AddListingFormProps {
-  agents: Agent[]; // Pass agents data from parent component
-}
-
-const AddListingForm: React.FC<AddListingFormProps> = ({ agents }) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({
+const AddListingForm: React.FC = () => {
+  const methods = useForm<FormData>({
     resolver: yupResolver(schema),
   });
 
+  const {
+    handleSubmit,
+    formState: { errors },
+  } = methods;
+
   const onSubmit = async (data: FormData) => {
     const formData = new FormData();
-    // formData.append("is_rental", data.is_rental.toString());
+    formData.append("is_rental", data.is_rental.toString());
     formData.append("zip_code", data.zip_code);
     formData.append("address", data.address);
     formData.append("region_id", data.region || "");
@@ -67,13 +65,16 @@ const AddListingForm: React.FC<AddListingFormProps> = ({ agents }) => {
     formData.append("bedrooms", data.bedrooms.toString());
     formData.append("description", data.description);
     formData.append("agent_id", data.agent_id);
+    formData.append("image", data.image);
     // formData.append("image", data.image[0]);
+
+    const AUTH_TOKEN = "9d011621-10af-4128-ba0d-27fb1331419e";
 
     try {
       const response = await fetch("https://api.real-estate-manager.redberryinternship.ge/api/real-estates", {
         method: "POST",
         headers: {
-          Authorization: "Bearer AUTH_TOKEN", // Replace YOUR_TOKEN with actual token
+          Authorization: `Bearer ${AUTH_TOKEN}`,
         },
         body: formData,
       });
@@ -90,21 +91,32 @@ const AddListingForm: React.FC<AddListingFormProps> = ({ agents }) => {
       <h1 className="text-[32px] font-medium leading-normal text-[#021526] text-center mb-8">ლისტინგის დამატება</h1>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-        {/* Deal Type */}
-        {/* <div>
+        {/*  */}
+
+        {/* Deal Type - Radio button */}
+        <div className="mt-4">
           <h2 className="text-xl font-semibold mb-4">გარიგების ტიპი</h2>
-          <div className="flex space-x-4">
-            <label>
-              <input type="radio" value="1" {...register("is_rental")} />
+          <div className="flex items-center">
+            <label className="flex items-center mr-4">
+              <input
+                type="radio"
+                value="0" // For sale
+                {...methods.register("is_rental")}
+                className="mr-2"
+              />
               <span>იყიდება</span>
             </label>
-            <label>
-              <input type="radio" value="0" {...register("is_rental")} />
+            <label className="flex items-center ml-16">
+              <input
+                type="radio"
+                value="1" // For rental
+                {...methods.register("is_rental")}
+                className="mr-2"
+              />
               <span>ქირავდება</span>
             </label>
           </div>
-          {errors.is_rental && <p className="text-red-500">{errors.is_rental.message}</p>}
-        </div> */}
+        </div>
 
         {/* Location */}
         <div>
@@ -113,15 +125,15 @@ const AddListingForm: React.FC<AddListingFormProps> = ({ agents }) => {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block mb-1">მისამართი *</label>
-              <input type="text" {...register("address")} className="w-full p-2 border border-gray-300 rounded" />
+              <input type="text" {...methods.register("address")} className="w-full p-2 border border-gray-300 rounded" />
               {errors.address && <p className="text-red-500">{errors.address.message}</p>}
-              <span className="font-fira text-sm text-custom-blue tracking-tight">✔️ მინიმუმ ორი სიმბოლო</span>
+              <span className="font-fira text-sm  tracking-tight">✔️ მინიმუმ ორი სიმბოლო</span>
             </div>
             <div>
               <label className="block mb-1">საფოსტო ინდექსი *</label>
-              <input type="text" {...register("zip_code")} className="w-full p-2 border border-gray-300 rounded" />
+              <input type="text" {...methods.register("zip_code")} className="w-full p-2 border border-gray-300 rounded" />
               {errors.zip_code && <p className="text-red-500">{errors.zip_code.message}</p>}
-              <span className="font-fira text-sm text-custom-blue tracking-tight">✔️ მხოლოდ რიცხვები</span>
+              <span className="font-fira text-sm tracking-tight">✔️ მხოლოდ რიცხვები</span>
             </div>
             <div>
               <RegionDropdown />
@@ -138,21 +150,21 @@ const AddListingForm: React.FC<AddListingFormProps> = ({ agents }) => {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block mb-1">ფასი *</label>
-              <input type="text" {...register("price")} className="w-full p-2 border border-gray-300 rounded" />
+              <input type="text" {...methods.register("price")} className="w-full p-2 border border-gray-300 rounded" />
               {errors.price && <p className="text-red-500">{errors.price.message}</p>}
-              <span className="font-fira text-sm text-custom-blue tracking-tight">✔️ მხოლოდ რიცხვები</span>
+              <span className="font-fira text-sm tracking-tight">✔️ მხოლოდ რიცხვები</span>
             </div>
             <div>
               <label className="block mb-1">ფართობი *</label>
-              <input type="text" {...register("area")} className="w-full p-2 border border-gray-300 rounded" />
+              <input type="text" {...methods.register("area")} className="w-full p-2 border border-gray-300 rounded" />
               {errors.area && <p className="text-red-500">{errors.area.message}</p>}
-              <span className="font-fira text-sm text-custom-blue tracking-tight">✔️ მხოლოდ რიცხვები</span>
+              <span className="font-fira text-sm tracking-tight">✔️ მხოლოდ რიცხვები</span>
             </div>
             <div>
               <label className="block mb-1">საძინებლების რაოდენობა *</label>
-              <input type="text" {...register("bedrooms")} className="w-full p-2 border border-gray-300 rounded" />
+              <input type="text" {...methods.register("bedrooms")} className="w-full p-2 border border-gray-300 rounded" />
               {errors.bedrooms && <p className="text-red-500">{errors.bedrooms.message}</p>}
-              <span className="font-fira text-sm text-custom-blue tracking-tight">✔️ მხოლოდ რიცხვები</span>
+              <span className="font-fira text-sm tracking-tight">✔️ მხოლოდ რიცხვები</span>
             </div>
           </div>
         </div>
@@ -160,34 +172,27 @@ const AddListingForm: React.FC<AddListingFormProps> = ({ agents }) => {
         {/* Description */}
         <div>
           <label className="block">აღწერა *</label>
-          <textarea {...register("description")} className="w-full p-2 border border-gray-300 rounded" rows={4} />
+          <textarea {...methods.register("description")} className="w-full p-2 border border-gray-300 rounded" rows={4} />
           {errors.description && <p className="text-red-500">{errors.description.message}</p>}
-          <span className="font-fira text-sm text-custom-blue tracking-tight">✔️ მინიმუმ ხუთი სიტყვა</span>
+          <span className="font-fira text-sm tracking-tight">✔️ მინიმუმ ხუთი სიტყვა</span>
         </div>
 
         {/* Photo Upload */}
         <div>
           <span className="block mb-1">ატვირთეთ ფოტო</span>
-          <input type="file" {...register("image")} className="w-full border border-gray-300 rounded" />
+          <input type="file" {...methods.register("image")} className="w-full border border-gray-300 rounded" />
           {errors.image && <p className="text-red-500">{errors.image.message}</p>}
         </div>
 
         {/* Agent */}
-        <div>
-          <h2 className="text-xl font-semibold mb-4">აგენტი</h2>
-          <div>
-            <label className="block mb-1">აირჩიე</label>
-            <select {...register("agent_id")} className="w-full p-2 border border-gray-300 rounded">
-              <option value="">Select an agent</option>
-              {agents.map((agent) => (
-                <option key={agent.id} value={agent.id}>
-                  {agent.name} {agent.surname}
-                </option>
-              ))}
-            </select>
-            {errors.agent_id && <p className="text-red-500">{errors.agent_id.message}</p>}
-          </div>
-        </div>
+        <FormProvider {...methods}>
+          <form onSubmit={methods.handleSubmit(onSubmit)} className="">
+            {/* Other form fields */}
+
+            {/* Include the AgentSelector component */}
+            <AgentSelector />
+          </form>
+        </FormProvider>
 
         {/* Buttons */}
         <div className="flex justify-end gap-4">

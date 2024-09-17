@@ -8,16 +8,16 @@ import { Agent } from "../../services/types"; // Adjust based on your project st
 // Validation Schema
 const schema = yup.object({
   //   is_rental: yup.number().required("Please check"),
-  zip_code: yup.string().matches(/^\d+$/, "Only numbers allowed").required("Postal code is required"),
-  address: yup.string().min(2, "Address must be at least 2 characters").required("Address is required"),
+  zip_code: yup.string().matches(/^\d+$/, "მხოლოდ რიცხვები").required("Postal code is required"),
+  address: yup.string().min(2, "მინიმუმ ორი სიმბოლო").required("Address is required"),
   region: yup.string(),
   city: yup.string(),
-  price: yup.number().typeError("Only numbers allowed").required("Price is required"),
-  area: yup.number().typeError("Only numbers allowed").required("Area is required"),
-  bedrooms: yup.number().typeError("Only numbers allowed").required("Number of bedrooms is required"),
-  description: yup.string().min(5, "Description must be at least 5 words").required("Description is required"),
+  price: yup.number().typeError("მხოლოდ რიცხვები").required("Price is required"),
+  area: yup.number().typeError("მხოლოდ რიცხვები").required("Area is required"),
+  bedrooms: yup.number().typeError("მხოლოდ რიცხვები").required("Number of bedrooms is required"),
+  description: yup.string().min(5, "მინიმუმ ხუთი სიტყვა").required("Description is required"),
   //   image: yup.mixed().required("image is required"),
-  agent_id: yup.string().required("Agent selection is required"),
+  agent_id: yup.string().required("აირჩიე აგენტი"),
 });
 
 interface FormData {
@@ -78,8 +78,9 @@ const AddListingForm: React.FC<AddListingFormProps> = ({ agents }) => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-4">
-      <h1 className="text-2xl font-bold text-center mb-8">ლისტინგის დამატება</h1>
+    <div className="max-w-4xl mx-auto p-4 mb-28">
+      <h1 className="text-[32px] font-medium leading-normal text-[#021526] text-center mb-8">ლისტინგის დამატება</h1>
+
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
         {/* Deal Type */}
         {/* <div>
@@ -100,55 +101,88 @@ const AddListingForm: React.FC<AddListingFormProps> = ({ agents }) => {
         {/* Location */}
         <div>
           <h2 className="text-xl font-semibold mb-4">მდებარეობა</h2>
-          <div className="space-y-4">
-            <div>
-              <label className="block mb-1">საფოსტო ინდექსი *</label>
-              <input type="text" {...register("zip_code")} className="w-full p-2 border border-gray-300 rounded" />
-              {errors.zip_code && <p className="text-red-500">{errors.zip_code.message}</p>}
-            </div>
+
+          <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block mb-1">მისამართი *</label>
               <input type="text" {...register("address")} className="w-full p-2 border border-gray-300 rounded" />
               {errors.address && <p className="text-red-500">{errors.address.message}</p>}
+              <span className="font-fira text-sm text-custom-blue tracking-tight">✔️ მინიმუმ ორი სიმბოლო</span>
+            </div>
+            <div>
+              <label className="block mb-1">საფოსტო ინდექსი *</label>
+              <input type="text" {...register("zip_code")} className="w-full p-2 border border-gray-300 rounded" />
+              {errors.zip_code && <p className="text-red-500">{errors.zip_code.message}</p>}
+              <span className="font-fira text-sm text-custom-blue tracking-tight">✔️ მხოლოდ რიცხვები</span>
             </div>
             <div>
               <label className="block mb-1">რეგიონი</label>
-              <input type="text" {...register("region")} className="w-full p-2 border border-gray-300 rounded" />
+              <select {...register("region")} className="w-full p-2 border border-gray-300 rounded text-gray-500" onChange="this.classList.add('text-black')">
+                <option value="" disabled selected hidden className="text-gray-500">
+                  აირჩიეთ რეგიონი
+                </option>
+                <option value="region1" className="text-black">
+                  რეგიონი 1
+                </option>
+                <option value="region2" className="text-black">
+                  რეგიონი 2
+                </option>
+                <option value="region3" className="text-black">
+                  რეგიონი 3
+                </option>
+              </select>
             </div>
             <div>
               <label className="block mb-1">ქალაქი</label>
-              <input type="text" {...register("city")} className="w-full p-2 border border-gray-300 rounded" />
+              <select {...register("city")} className="w-full p-2 border border-gray-300 rounded text-gray-500" onChange="this.classList.add('text-black')">
+                <option value="" disabled selected hidden className="text-gray-500">
+                  აირჩიეთ ქალაქი
+                </option>
+                <option value="city1" className="text-black">
+                  ქალაქი 1
+                </option>
+                <option value="city2" className="text-black">
+                  ქალაქი 2
+                </option>
+                <option value="city3" className="text-black">
+                  ქალაქი 3
+                </option>
+              </select>
             </div>
           </div>
         </div>
 
         {/* Property Details */}
-        <div>
+        <div className=" pt-8">
           <h2 className="text-xl font-semibold mb-4">ბინის დეტალები</h2>
-          <div className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block mb-1">ფასი *</label>
               <input type="text" {...register("price")} className="w-full p-2 border border-gray-300 rounded" />
               {errors.price && <p className="text-red-500">{errors.price.message}</p>}
+              <span className="font-fira text-sm text-custom-blue tracking-tight">✔️ მხოლოდ რიცხვები</span>
             </div>
             <div>
               <label className="block mb-1">ფართობი *</label>
               <input type="text" {...register("area")} className="w-full p-2 border border-gray-300 rounded" />
               {errors.area && <p className="text-red-500">{errors.area.message}</p>}
+              <span className="font-fira text-sm text-custom-blue tracking-tight">✔️ მხოლოდ რიცხვები</span>
             </div>
             <div>
               <label className="block mb-1">საძინებლების რაოდენობა *</label>
               <input type="text" {...register("bedrooms")} className="w-full p-2 border border-gray-300 rounded" />
               {errors.bedrooms && <p className="text-red-500">{errors.bedrooms.message}</p>}
+              <span className="font-fira text-sm text-custom-blue tracking-tight">✔️ მხოლოდ რიცხვები</span>
             </div>
           </div>
         </div>
 
         {/* Description */}
         <div>
-          <label className="block mb-1">აღწერა *</label>
+          <label className="block">აღწერა *</label>
           <textarea {...register("description")} className="w-full p-2 border border-gray-300 rounded" rows={4} />
           {errors.description && <p className="text-red-500">{errors.description.message}</p>}
+          <span className="font-fira text-sm text-custom-blue tracking-tight">✔️ მინიმუმ ხუთი სიტყვა</span>
         </div>
 
         {/* Photo Upload */}
@@ -176,11 +210,17 @@ const AddListingForm: React.FC<AddListingFormProps> = ({ agents }) => {
         </div>
 
         {/* Buttons */}
-        <div className="flex justify-between">
-          <button type="button" className="bg-white border border-gray-300 p-2 rounded">
+        <div className="flex justify-end gap-4">
+          <button
+            type="button"
+            className="w-[103px] h-[47px] flex items-center justify-center rounded-[10px] border border-[#f93b1d] text-[#f93b1d] bg-white hover:bg-[#f93b1d] hover:text-white hover:border-[#f93b1d] transition-all duration-300"
+          >
             გაუქმება
           </button>
-          <button type="submit" className="bg-orange-500 text-white p-2 rounded">
+          <button
+            type="submit"
+            className="w-[187px] h-[47px] flex items-center justify-center  rounded-[10px] bg-[#f93b1d] text-white hover:bg-[#e12d14] transition-all duration-200"
+          >
             დაამატე ლისტინგი
           </button>
         </div>

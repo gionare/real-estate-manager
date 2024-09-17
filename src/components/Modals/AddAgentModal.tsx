@@ -61,8 +61,8 @@ const AddAgentModal: React.FC<AddAgentModalProps> = ({ isOpen, onClose, onAddAge
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded shadow-lg w-[1009px] h-[784px] z-50 p-[105px]">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={onClose}>
+      <div className="bg-white rounded shadow-lg w-[1009px] h-[784px] z-50 p-[105px]" onClick={(e) => e.stopPropagation()}>
         <h1 className="text-center text-[32px] mb-6" style={{ fontFamily: "FiraGO", fontWeight: 500 }}>
           აგენტის დამატება
         </h1>

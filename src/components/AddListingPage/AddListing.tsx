@@ -77,6 +77,11 @@ const AddListingForm: React.FC<AddListingFormProps> = ({ agents }) => {
     }
   };
 
+  // Handle onChange to update the select color dynamically
+  const handleInputChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    event.target.classList.add("text-black");
+  };
+
   return (
     <div className="max-w-4xl mx-auto p-4 mb-28">
       <h1 className="text-[32px] font-medium leading-normal text-[#021526] text-center mb-8">ლისტინგის დამატება</h1>
@@ -117,7 +122,7 @@ const AddListingForm: React.FC<AddListingFormProps> = ({ agents }) => {
             </div>
             <div>
               <label className="block mb-1">რეგიონი</label>
-              <select {...register("region")} className="w-full p-2 border border-gray-300 rounded text-gray-500" onChange="this.classList.add('text-black')">
+              <select {...register("region")} className="w-full p-2 border border-gray-300 rounded text-gray-500" onChange={handleInputChange}>
                 <option value="" disabled selected hidden className="text-gray-500">
                   აირჩიეთ რეგიონი
                 </option>
@@ -134,7 +139,7 @@ const AddListingForm: React.FC<AddListingFormProps> = ({ agents }) => {
             </div>
             <div>
               <label className="block mb-1">ქალაქი</label>
-              <select {...register("city")} className="w-full p-2 border border-gray-300 rounded text-gray-500" onChange="this.classList.add('text-black')">
+              <select {...register("city")} className="w-full p-2 border border-gray-300 rounded text-gray-500" onChange={handleInputChange}>
                 <option value="" disabled selected hidden className="text-gray-500">
                   აირჩიეთ ქალაქი
                 </option>

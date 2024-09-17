@@ -2,12 +2,10 @@
 import "./App.css";
 import AddListingForm from "./components/AddListingPage/AddListing";
 import CardCarousel from "./components/HomeDetailsPage/CardCarousel";
-// import CardCarousel from "./components/HomeDetailsPage/CardCarousel";
 import HomeDetails from "./components/HomeDetailsPage/HomeDetails";
 import AddButtons from "./components/HomePage/AddButtons";
 import CardGrid from "./components/HomePage/CardGrid";
 import Filters from "./components/HomePage/Filters";
-
 import Header from "./components/Layout/Header";
 
 function App() {

@@ -21,7 +21,7 @@ const schema = yup.object({
     .required("ატვირთეთ ფოტო")
     .test("fileSize", "✔️ არ უნდა აღებმატებოდეს 1MB-ის ზომაში", (value) => {
       return value && value.size <= 1024 * 1024;
-    }), // Correct type for file input
+    }),
 });
 
 type FormData = {

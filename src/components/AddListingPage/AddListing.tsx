@@ -17,7 +17,12 @@ const schema = yup.object({
   bedrooms: yup.number().typeError("მხოლოდ რიცხვები").required("Number of bedrooms is required"),
   description: yup.string().min(5, "მინიმუმ ხუთი სიტყვა").required("Description is required"),
   //   image: yup.mixed().required("image is required"),
-  image: yup.mixed<File>().required("ატვირთეთ ფოტო"), // Correct type for file input
+  image: yup
+    .mixed<File>()
+    .required("ატვირთეთ ფოტო")
+    .test("fileSize", "✔️ არ უნდა აღებმატებოდეს 1MB-ის ზომაში", (value) => {
+      return value && value.size <= 1024 * 1024;
+    }),
   agent_id: yup.string().required("აირჩიე აგენტი"),
 });
 

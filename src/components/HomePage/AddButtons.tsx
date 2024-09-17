@@ -1,6 +1,15 @@
 import React, { useState } from "react";
 import AddAgentModal from "../Modals/AddAgentModal";
 
+// Custom type for the form data
+interface AgentFormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  image: File;
+}
+
 const AddButtons: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -12,7 +21,7 @@ const AddButtons: React.FC = () => {
     setIsModalOpen(false);
   };
 
-  const handleAddAgent = (formData: FormData) => {
+  const handleAddAgent = (formData: AgentFormData) => {
     // Handle form submission
     console.log("Agent added:", formData);
   };

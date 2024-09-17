@@ -24,7 +24,7 @@ type FormData = {
   lastName: string;
   email: string;
   phoneNumber: string;
-  image: File; // Correct type for file input
+  image: File;
 };
 
 interface AddAgentModalProps {

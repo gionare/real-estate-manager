@@ -17,6 +17,7 @@ const schema = yup.object({
   bedrooms: yup.number().typeError("მხოლოდ რიცხვები").required("Number of bedrooms is required"),
   description: yup.string().min(5, "მინიმუმ ხუთი სიტყვა").required("Description is required"),
   //   image: yup.mixed().required("image is required"),
+  image: yup.mixed<File>().required("ატვირთეთ ფოტო"), // Correct type for file input
   agent_id: yup.string().required("აირჩიე აგენტი"),
 });
 
@@ -30,7 +31,7 @@ interface FormData {
   area: number;
   bedrooms: number;
   description: string;
-  //   image: FileList;
+  image: File;
   agent_id: string;
 }
 
@@ -191,11 +192,11 @@ const AddListingForm: React.FC<AddListingFormProps> = ({ agents }) => {
         </div>
 
         {/* Photo Upload */}
-        {/* <div>
+        <div>
           <span className="block mb-1">ატვირთეთ ფოტო</span>
           <input type="file" {...register("image")} className="w-full border border-gray-300 rounded" />
           {errors.image && <p className="text-red-500">{errors.image.message}</p>}
-        </div> */}
+        </div>
 
         {/* Agent */}
         <div>

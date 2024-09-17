@@ -16,7 +16,12 @@ const schema = yup.object({
     .string()
     .matches(/^\+?[1-9]\d{1,14}$/, "მიუთითეთ სწორი ტელეფონის ნომერი")
     .required("ტელეფონის ნომერი აუცილებელია"),
-  image: yup.mixed<File>().required("ატვირთეთ ფოტო"), // Correct type for file input
+  image: yup
+    .mixed<File>()
+    .required("ატვირთეთ ფოტო")
+    .test("fileSize", "✔️ არ უნდა აღებმატებოდეს 1MB-ის ზომაში", (value) => {
+      return value && value.size <= 1024 * 1024;
+    }), // Correct type for file input
 });
 
 type FormData = {

@@ -10,38 +10,67 @@ import AgentSelector from "./AgentSelector";
 
 // Validation Schema
 const schema = yup.object({
-  is_rental: yup.number().required("Please check"),
-  zip_code: yup.string().matches(/^\d+$/, "მხოლოდ რიცხვები").required("Postal code is required"),
-  address: yup.string().min(2, "მინიმუმ ორი სიმბოლო").required("Address is required"),
-  region: yup.string(),
-  city: yup.string(),
   price: yup.number().typeError("მხოლოდ რიცხვები").required("Price is required"),
-  area: yup.number().typeError("მხოლოდ რიცხვები").required("Area is required"),
-  bedrooms: yup.number().typeError("მხოლოდ რიცხვები").required("Number of bedrooms is required"),
+  zip_code: yup.string().matches(/^\d+$/, "მხოლოდ რიცხვები").required("საფოსტო ინდექსი სავალდებულოა"),
   description: yup.string().min(5, "მინიმუმ ხუთი სიტყვა").required("Description is required"),
-  //   image: yup.mixed().required("image is required"),
+  area: yup.number().typeError("მხოლოდ რიცხვები").required("Area is required"),
+  region: yup.string().required("რეგიონი სავალდებულოა"),
+  city: yup.string().required("ქალაქი სავალდებულოა"),
+  address: yup.string().min(2, "მინიმუმ ორი სიმბოლო").required("Address is required"),
+  agent_id: yup.number().required("აირჩიე აგენტი"),
+  bedrooms: yup.number().typeError("მხოლოდ რიცხვები").integer("საძინებლების რაოდენობა უნდა იყოს მთელი რიცხვი").required("Number of bedrooms is required"),
+  is_rental: yup.number().required("აირჩიეთ გარიგების ტიპი"),
   image: yup
     .mixed<File>()
     .required("ატვირთეთ ფოტო")
+    .test("fileType", "აირჩიეთ სურათის სწორი ტიპი (.jpg, .png)", (value) => {
+      return value && ["image/jpeg", "image/png"].includes(value.type);
+    })
+    .test("fileType", "აირჩიეთ სურათის სწორი ტიპი (.jpg, .png)", (value) => {
+      console.log(value); // Check the file type in the console
+      return value && ["image/jpeg", "image/png"].includes(value.type);
+    })
     .test("fileSize", "✔️ არ უნდა აღებმატებოდეს 1MB-ის ზომაში", (value) => {
       return value && value.size <= 1024 * 1024;
     }),
-  agent_id: yup.string().required("აირჩიე აგენტი"),
 });
 
 interface FormData {
-  is_rental: number;
-  zip_code: string;
-  address: string;
-  region?: string;
-  city?: string;
   price: number;
-  area: number;
-  bedrooms: number;
+  zip_code: string;
   description: string;
+  area: number;
+  city: string;
+  address: string;
+  agent_id: number;
+  bedrooms: number;
+  is_rental: number;
   image: File;
-  agent_id: string;
+  region: string;
 }
+
+// interface FormData {
+//   price: number,
+//   zip_code: string;
+//   description: string;
+//   area: number;
+//   city_id: number;
+//   address: string;
+//   agent_id: string;
+//   bedrooms: number;
+//   is_rental: number;
+//   image: File;
+
+//   region?: string;
+//   city?: string;
+// }
+
+// {
+//   "city_id": "1",
+//   "agent_id": "1",
+//   "created_at": "2024-08-07T10:46:53.000000Z",
+//   "id": 1
+// }
 
 const AddListingForm: React.FC = () => {
   const methods = useForm<FormData>({
@@ -58,15 +87,14 @@ const AddListingForm: React.FC = () => {
     formData.append("is_rental", data.is_rental.toString());
     formData.append("zip_code", data.zip_code);
     formData.append("address", data.address);
-    formData.append("region_id", data.region || "");
-    formData.append("city_id", data.city || "");
+    formData.append("region_id", data.region);
+    formData.append("city_id", data.city);
     formData.append("price", data.price.toString());
     formData.append("area", data.area.toString());
     formData.append("bedrooms", data.bedrooms.toString());
     formData.append("description", data.description);
-    formData.append("agent_id", data.agent_id);
+    formData.append("agent_id", data.agent_id.toString());
     formData.append("image", data.image);
-    // formData.append("image", data.image[0]);
 
     const AUTH_TOKEN = "9d011621-10af-4128-ba0d-27fb1331419e";
 
@@ -79,9 +107,10 @@ const AddListingForm: React.FC = () => {
         body: formData,
       });
       if (!response.ok) throw new Error("Network response was not ok");
-      // Handle success (e.g., show a message or redirect)
+      alert("Form submitted successfully!");
     } catch (error) {
       // Handle error
+      alert("Error submitting the form. Please try again.");
       console.error("Error submitting form:", error);
     }
   };
@@ -94,7 +123,7 @@ const AddListingForm: React.FC = () => {
         {/*  */}
 
         {/* Deal Type - Radio button */}
-        <div className="mt-4">
+        <div>
           <h2 className="text-xl font-semibold mb-4">გარიგების ტიპი</h2>
           <div className="flex items-center">
             <label className="flex items-center mr-4">
@@ -116,6 +145,7 @@ const AddListingForm: React.FC = () => {
               <span>ქირავდება</span>
             </label>
           </div>
+          {errors.is_rental && <p className="text-red-500">{errors.is_rental.message}</p>}
         </div>
 
         {/* Location */}
@@ -180,7 +210,7 @@ const AddListingForm: React.FC = () => {
         {/* Photo Upload */}
         <div>
           <span className="block mb-1">ატვირთეთ ფოტო</span>
-          <input type="file" {...methods.register("image")} className="w-full border border-gray-300 rounded" />
+          <input type="file" {...methods.register("image")} accept="image/jpeg,image/png" className="w-full border border-gray-300 rounded" />
           {errors.image && <p className="text-red-500">{errors.image.message}</p>}
         </div>
 

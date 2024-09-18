@@ -58,6 +58,41 @@ API POST real estate
 }
 ```
 
+GET real-estate by id
+
+```
+{
+  "id": 1,
+  "address": "შარტავას 2ა",
+  "zip_code": "0101",
+  "price": 100000,
+  "area": 100.5,
+  "bedrooms": 3,
+  "is_rental": 0,
+  "city_id": 1,
+  "description": "სახლი ლიანდაგთან",
+  "created_at": "2024-08-07T10:46:53.000000Z",
+  "city": {
+    "id": 1,
+    "name": "სოხუმი",
+    "region_id": 1,
+    "region": {
+      "id": 1,
+      "name": "აფხაზეთი"
+    }
+  },
+  "agent_id": 1,
+  "agent": {
+    "id": 1,
+    "name": "gela",
+    "surname": "gocha",
+    "email": "gela@redberry.ge",
+    "phone": "555555555",
+    "avatar": "https://api.real-estate-manager.redberryinternship.com/images/hmnVAO6LEytzoxFz8vRqBCry6ba1wvHvo2YxPXJW.jpg"
+  }
+}
+```
+
 ````https://api.real-estate-manager.redberryinternship.ge/api/agents
 Response body
 Download

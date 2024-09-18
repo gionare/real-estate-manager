@@ -3,10 +3,10 @@ import AddAgentModal from "../Modals/AddAgentModal";
 
 // Custom type for the form data
 interface AgentFormData {
-  firstName: string;
-  lastName: string;
+  name: string;
+  surname: string;
   email: string;
-  phoneNumber: string;
+  phone: string;
   avatar: File;
 }
 

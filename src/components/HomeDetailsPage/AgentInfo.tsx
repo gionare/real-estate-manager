@@ -11,9 +11,9 @@ interface AgentInfoProps {
 const AgentInfo: React.FC<AgentInfoProps> = ({ avatar, name, surname, email, phoneNumber }) => {
   return (
     <div className="flex items-start p-6 border border-[#dbdbdb] rounded-lg flex-col w-[503px]">
-      {/* Image and Details Container */}
+      {/* avatar and Details Container */}
       <div className="flex items-center flex-row mb-4">
-        {/* Avatar Image */}
+        {/* Avatar  */}
         <img src={avatar} alt={`${name} ${surname}`} className="w-[72px] h-[72px] rounded-full mr-[14px]" />
         {/* Name and Surname */}
         <div>

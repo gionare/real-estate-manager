@@ -7,7 +7,7 @@ interface AgentFormData {
   lastName: string;
   email: string;
   phoneNumber: string;
-  image: File;
+  avatar: File;
 }
 
 const AddButtons: React.FC = () => {

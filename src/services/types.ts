@@ -4,6 +4,7 @@ export interface Agent {
   name: string;
   surname: string;
   avatar: string;
+  phoneNumber: number;
 }
 
 export interface RealEstate {

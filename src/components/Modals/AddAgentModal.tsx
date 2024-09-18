@@ -2,21 +2,22 @@ import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { addAgent } from "../../services/agentService";
 
 // Validation Schema
 const schema = yup.object({
-  firstName: yup.string().min(2, "მინიმუმ ორი სიმბოლო").required("სახელი აუცილებელია"),
-  lastName: yup.string().min(2, "მინიმუმ ორი სიმბოლო").required("გვარი აუცილებელია"),
+  name: yup.string().min(2, "მინიმუმ ორი სიმბოლო").required("სახელი აუცილებელია"),
+  surname: yup.string().min(2, "მინიმუმ ორი სიმბოლო").required("გვარი აუცილებელია"),
   email: yup
     .string()
     .email("არასწორი ელ-ფოსტა")
     .matches(/@redberry\.ge$/, "გამოიყენეთ @redberry.ge ფოსტა")
     .required("ელ–ფოსტა აუცილებელია"),
-  phoneNumber: yup
+  phone: yup
     .string()
     .matches(/^\+?[1-9]\d{1,14}$/, "მიუთითეთ სწორი ტელეფონის ნომერი")
     .required("ტელეფონის ნომერი აუცილებელია"),
-  image: yup
+  avatar: yup
     .mixed<File>()
     .required("ატვირთეთ ფოტო")
     .test("fileSize", "✔️ არ უნდა აღებმატებოდეს 1MB-ის ზომაში", (value) => {
@@ -25,11 +26,11 @@ const schema = yup.object({
 });
 
 type FormData = {
-  firstName: string;
-  lastName: string;
+  name: string;
+  surname: string;
   email: string;
-  phoneNumber: string;
-  image: File;
+  phone: string;
+  avatar: File;
 };
 
 interface AddAgentModalProps {
@@ -39,7 +40,6 @@ interface AddAgentModalProps {
 }
 
 const AddAgentModal: React.FC<AddAgentModalProps> = ({ isOpen, onClose, onAddAgent }) => {
-  // Always call hooks unconditionally
   const {
     register,
     handleSubmit,
@@ -52,42 +52,44 @@ const AddAgentModal: React.FC<AddAgentModalProps> = ({ isOpen, onClose, onAddAge
   // Early return to handle conditional rendering
   if (!isOpen) return null;
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = async (data: FormData) => {
     const formData = new FormData();
-    formData.append("firstName", data.firstName);
-    formData.append("lastName", data.lastName);
+    formData.append("name", data.name);
+    formData.append("surname", data.surname);
     formData.append("email", data.email);
-    formData.append("phoneNumber", data.phoneNumber);
-    if (data.image) {
-      formData.append("image", data.image);
+    formData.append("phone", data.phone);
+    if (data.avatar) {
+      formData.append("avatar", data.avatar);
     }
-    onAddAgent(data);
-    onClose();
+
+    try {
+      const result = await addAgent(formData);
+      onAddAgent(result);
+      onClose();
+    } catch (error) {
+      console.error("Failed to add agent:", error);
+    }
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={onClose}>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={onClose} style={{ fontFamily: "FiraGO" }}>
       <div className="bg-white rounded shadow-lg w-[1009px] h-[784px] z-50 p-[105px]" onClick={(e) => e.stopPropagation()}>
-        <h1 className="text-center text-[32px] mb-6" style={{ fontFamily: "FiraGO", fontWeight: 500 }}>
+        <h1 className="text-center text-[32px] mb-6" style={{ fontWeight: 500 }}>
           აგენტის დამატება
         </h1>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col space-y-4 gap-[28px]">
           <div className="flex space-x-4 gap-[31px]">
             <div className="flex-1">
               <label className="block mb-1">სახელი *</label>
-              <input type="text" {...register("firstName")} className="w-full p-2 border border-gray-300 rounded" />
-              {errors.firstName && <p className="text-red-500">{errors.firstName.message}</p>}
-              <span className="font-sans text-sm font-normal text-[#021526]" style={{ fontFamily: "FiraGO" }}>
-                ✔️ მინიმუმ ორი სიმბოლო
-              </span>
+              <input type="text" {...register("name")} className="w-full p-2 border border-gray-300 rounded" />
+              {errors.name && <p className="text-red-500">{errors.name.message}</p>}
+              <span className="font-sans text-sm font-normal text-[#021526]">✔️ მინიმუმ ორი სიმბოლო</span>
             </div>
             <div className="flex-1">
               <label className="block mb-1">გვარი</label>
-              <input type="text" {...register("lastName")} className="w-full p-2 border border-gray-300 rounded" />
-              {errors.lastName && <p className="text-red-500">{errors.lastName.message}</p>}
-              <span className="font-sans text-sm font-normal text-[#021526]" style={{ fontFamily: "FiraGO" }}>
-                ✔️ მინიმუმ ორი სიმბოლო
-              </span>
+              <input type="text" {...register("surname")} className="w-full p-2 border border-gray-300 rounded" />
+              {errors.surname && <p className="text-red-500">{errors.surname.message}</p>}
+              <span className="font-sans text-sm font-normal text-[#021526]">✔️ მინიმუმ ორი სიმბოლო</span>
             </div>
           </div>
           <div className="flex space-x-4 gap-[31px]">
@@ -95,23 +97,19 @@ const AddAgentModal: React.FC<AddAgentModalProps> = ({ isOpen, onClose, onAddAge
               <label className="block mb-1">ელ–ფოსტა *</label>
               <input type="email" {...register("email")} className="w-full p-2 border border-gray-300 rounded" />
               {errors.email && <p className="text-red-500">{errors.email.message}</p>}
-              <span className="font-sans text-sm font-normal text-[#021526]" style={{ fontFamily: "FiraGO" }}>
-                ✔️ გამოიყენეთ @redberry.ge ფოსტა
-              </span>
+              <span className="font-sans text-sm font-normal text-[#021526]">✔️ გამოიყენეთ @redberry.ge ფოსტა</span>
             </div>
             <div className="flex-1">
               <label className="block mb-1">ტელეფონის ნომერი</label>
-              <input type="tel" {...register("phoneNumber")} className="w-full p-2 border border-gray-300 rounded" />
-              {errors.phoneNumber && <p className="text-red-500">{errors.phoneNumber.message}</p>}
-              <span className="font-sans text-sm font-normal text-[#021526]" style={{ fontFamily: "FiraGO" }}>
-                ✔️ მხოლოდ რიცხვები
-              </span>
+              <input type="tel" {...register("phone")} className="w-full p-2 border border-gray-300 rounded" />
+              {errors.phone && <p className="text-red-500">{errors.phone.message}</p>}
+              <span className="font-sans text-sm font-normal text-[#021526]">✔️ მხოლოდ რიცხვები</span>
             </div>
           </div>
           <div>
             <label className="block mb-1">ატვირთეთ ფოტო *</label>
             <Controller
-              name="image"
+              name="avatar"
               control={control}
               render={({ field }) => (
                 <input
@@ -129,7 +127,7 @@ const AddAgentModal: React.FC<AddAgentModalProps> = ({ isOpen, onClose, onAddAge
               )}
             />
 
-            {errors.image && <p className="text-red-500">{errors.image.message}</p>}
+            {errors.avatar && <p className="text-red-500">{errors.avatar.message}</p>}
           </div>
           <div className="flex justify-end mt-24 space-x-4">
             <button

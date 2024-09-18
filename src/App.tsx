@@ -19,7 +19,7 @@ function App() {
       <CardGrid />
       <HomeDetails />
       <CardCarousel />
-      <AddListingForm agents={[]} />
+      <AddListingForm />
     </div>
   );
 }

@@ -1,41 +1,46 @@
 Real-estate-manager
 
-## npm install react-hook-form yup @hookform/resolvers
-
 Components Tree
 
-1. Layout.jsx
-   - Header (includes Redberry image)
-   - MainContent
-     - HomePage (contains page-specific content)
-1. HomePage.jsx
-   _ Header
-   _ FilterSidebar (filter options on the left)
-   _ Region რეგიონი
-   _ PriceCategory საფასო კატეგორია
-   _ Area ფართობი
-   _ Bedrooms საძინებლების რაოდენობა
-   _ Add buttons
-   _ AddListingButton + ლისტინგის დამატება
-   _ AddAgentButton + აგენტის დამატება
-   LISTINGS graph
-   _ AddAgentModal (modal for adding an agent)
-1. ListingDetailPage.jsx
-   - Header
-   - ListingDetail (detailed view of the selected listing)
-     - ListingImages (carousel or gallery of images)
-     - ListingDescription (details about the listing)
-     - AgentInfo (information about the listing agent, if included)\
-   - LISTINGS carousel
-1. AddListingPage.jsx (for adding a new listing)
-   - Header
-   - AddListingForm (form to input new listing details)
-   - FormSubmitButton
+- **components**
+  - **`AddListingPage`**
+    - AddListing.tsx
+    - AgentSelector.tsx
+    - CityDropdown.tsx
+    - RegionDropdown.tsx
+  - **`HomeDetailsPage`**
+    - AgentInfo.tsx
+    - CardCarousel.tsx
+    - HomeDetails.tsx
+    - HomeDetailsCard.tsx
+  - **`HomePage`**
+    - AddButtons.tsx
+    - Card.tsx
+    - CardGrid.tsx
+    - Filters.tsx
+    - RentOrSale.tsx
+  - **`Layout`**
+    - Header.tsx
+  - **`Modals`**
+    - AddAgentModal.tsx
+- **`containers`**
+- **`index.css`**
+- **`main.tsx`**
+- **`pages`**
+- **`services`**
+  - agents.ts
+  - api.ts
+  - cities.ts
+  - realEstates.ts
+  - types.ts
+- **`styles`**
+- **`vite-env.d.ts`**
 
-Your api token is:
-9d011621-10af-4128-ba0d-27fb1331419e
+API token: `
+9d011621-10af-4128-ba0d-27fb1331419e`
 zogadad inaxeba ENV shi
 
+```
 API POST real estate
 {
 "price": "100000",
@@ -51,8 +56,9 @@ API POST real estate
 "created_at": "2024-09-14T02:35:08.000000Z",
 "id": 249
 }
+```
 
-https://api.real-estate-manager.redberryinternship.ge/api/agents
+````https://api.real-estate-manager.redberryinternship.ge/api/agents
 Response body
 Download
 [
@@ -62,7 +68,9 @@ Download
 "surname": "Gochita",
 "avatar": "https://api.real-estate-manager.redberryinternship.ge/storage/agent_avatars/MqUrzesnDuqdzcEQZOMbUnrUiABODfoAVTRN0GJc.jpg"
 }
-]
+]```
+
+## npm install react-hook-form yup @hookform/resolvers
 
 ## To create a new branch, work on it, and later merge it back into your main branch
 
@@ -85,4 +93,4 @@ git merge modal-feature
 
 # Push the merged changes to remote
 git push origin master
-```
+````

@@ -65,7 +65,7 @@ const CardCarousel: React.FC = () => {
           {/* Map through the real estate items and display them */}
           {realEstates.slice(currentIndex, currentIndex + 4).map((realEstate) => (
             <div className="px-2" key={realEstate.id}>
-              <Card realEstate={realEstate} />
+              <Card key={realEstate.id} realEstate={realEstate} />
             </div>
           ))}
         </div>

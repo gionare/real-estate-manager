@@ -1,14 +1,21 @@
 import React from "react";
 import { RealEstate } from "../../services/types";
+import { useNavigate } from "react-router-dom";
 
 interface CardProps {
   realEstate: RealEstate;
 }
 
 const Card: React.FC<CardProps> = ({ realEstate }) => {
+  const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    navigate(`/homedetails/${realEstate.id}`, { state: { realEstate } });
+  };
+
   const { image, price, address, city } = realEstate;
   return (
-    <div className="w-[384px] h-[455px] relative rounded-[14px] border border-gray-300 shadow-[0_4px_8px_rgba(0,0,0,0.1)] mt-14">
+    <div className="w-[384px] h-[455px] relative rounded-[14px] border border-gray-300 shadow-[0_4px_8px_rgba(0,0,0,0.1)] mt-14" onClick={handleCardClick}>
       {/* Card image section */}
       <img src={image} alt="Card Image" className="w-full h-[307px] rounded-t-[14px] object-cover" />
 

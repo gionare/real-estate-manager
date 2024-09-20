@@ -1,41 +1,28 @@
 import React from "react";
+import { Agent } from "../../services/types";
 
-interface AgentInfoProps {
-  avatar: string;
-  name: string;
-  surname: string;
-  email: string;
-  phoneNumber: string;
-}
-
-const AgentInfo: React.FC<AgentInfoProps> = ({ avatar, name, surname, email, phoneNumber }) => {
+const AgentInfo: React.FC<Agent> = ({ avatar, name, surname, email, phone }) => {
   return (
-    <div className="flex items-start p-6 border border-[#dbdbdb] rounded-lg flex-col w-[503px]">
-      {/* avatar and Details Container */}
-      <div className="flex items-center flex-row mb-4">
-        {/* Avatar  */}
-        <img src={avatar} alt={`${name} ${surname}`} className="w-[72px] h-[72px] rounded-full mr-[14px]" />
-        {/* Name and Surname */}
+    <div className="flex flex-col items-start p-6 border border-[#dbdbdb] rounded-lg w-[503px]">
+      {/* Avatar and Details Container */}
+      <div className="flex items-center mb-4">
+        <img src={avatar} alt="avatar image" className="w-[72px] h-[72px] rounded-full mr-4" />
         <div>
           <p className="text-lg font-semibold text-[#021526]">
             {name} {surname}
           </p>
-          {/* Agent Title */}
-          <p className="text-sm text-[#808a93]">აგენტი</p>
+          <p className="text-sm text-mutedText">აგენტი</p>
         </div>
       </div>
-
       {/* Details */}
       <div className="flex flex-col">
-        {/* Email */}
-        <div className="flex flex-row gap-2 items-center mb-2">
-          <img src="/icon-email.png" alt="Email icon" className="w-[18px] h-[16px]" />
-          <p className="text-sm text-[#808a93]">{email}</p>
+        <div className="flex items-center mb-2">
+          <img src="/icon-email.png" alt="Email icon" className="w-[18px] h-[16px] mr-2" />
+          <p className="text-sm text-mutedText">{email}</p>
         </div>
-        {/* Phone Number */}
-        <div className="flex flex-row gap-2 items-center">
-          <img src="/icon-phone.png" alt="Phone icon" className="w-[16px]" />
-          <p className="text-sm text-[#808a93]">{phoneNumber}</p>
+        <div className="flex items-center">
+          <img src="/icon-phone.png" alt="Phone icon" className="w-[16px] mr-2" />
+          <p className="text-sm text-mutedText">{phone}</p>
         </div>
       </div>
     </div>

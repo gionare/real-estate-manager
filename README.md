@@ -93,18 +93,6 @@ GET real-estate by id
 }
 ```
 
-````https://api.real-estate-manager.redberryinternship.ge/api/agents
-Response body
-Download
-[
-{
-"id": 217,
-"name": "Drago",
-"surname": "Gochita",
-"avatar": "https://api.real-estate-manager.redberryinternship.ge/storage/agent_avatars/MqUrzesnDuqdzcEQZOMbUnrUiABODfoAVTRN0GJc.jpg"
-}
-]```
-
 ## npm install react-hook-form yup @hookform/resolvers
 
 ## To create a new branch, work on it, and later merge it back into your main branch
@@ -128,4 +116,8 @@ git merge modal-feature
 
 # Push the merged changes to remote
 git push origin master
-````
+```
+
+## React Router Implementation
+
+`npm install react-router-dom`

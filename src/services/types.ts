@@ -3,21 +3,28 @@ export interface Agent {
   id: number;
   name: string;
   surname: string;
+  phone: string;
+  email: string;
   avatar: string;
-  phoneNumber: number;
 }
 
 export interface RealEstate {
-  id: number;
-  address: string;
+  price: string;
   zip_code: string;
-  price: number;
   area: number;
+  city_id: number;
+  address: string;
+  agent_id: number;
   bedrooms: number;
   is_rental: number;
+  description: string;
   image: string;
-  city_id: number;
+  created_at: string;
+  id: number;
+
+  location: string;
   city: City; // Nested city information
+  agent: Agent;
 }
 
 export interface City {

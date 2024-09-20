@@ -6,6 +6,9 @@ export default {
       fontFamily: {
         "fira-go": ["FiraGO", "sans-serif"],
       },
+      colors: {
+        mutedText: "#808a93",
+      },
     },
   },
   plugins: [],

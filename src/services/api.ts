@@ -29,6 +29,10 @@ export function getAgents(): Promise<Agent[]> {
   return fetchData<Agent[]>("agents");
 }
 
+export function getAgentById(id: number): Promise<Agent> {
+  return fetchData<Agent>(`agents/${id}`);
+}
+
 // Function to get all real estates
 export function getRealEstates(): Promise<RealEstate[]> {
   return fetchData<RealEstate[]>("real-estates");

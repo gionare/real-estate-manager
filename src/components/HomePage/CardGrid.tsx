@@ -44,7 +44,7 @@ const CardGrid: React.FC = () => {
   if (error) return <div>{error}</div>;
 
   return (
-    <div className="grid grid-cols-4 gap-4">
+    <div className="grid grid-cols-4 gap-4 border mb-24">
       {realEstates.map((realEstate) => (
         <Card key={realEstate.id} realEstate={realEstate} />
       ))}

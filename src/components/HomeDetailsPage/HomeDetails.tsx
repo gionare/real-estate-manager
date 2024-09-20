@@ -1,30 +1,54 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import HomeDetailsCard from "./HomeDetailsCard";
+import CardCarousel from "./CardCarousel";
+import { getRealEstateById, getAgents } from "../../services/api";
+import { RealEstate, Agent } from "../../services/types";
 
 const HomeDetails: React.FC = () => {
-  const agent = {
-    avatar: "https://api.real-estate-manager.redberryinternship.ge/storage/agent_avatars/MqUrzesnDuqdzcEQZOMbUnrUiABODfoAVTRN0GJc.jpg",
-    name: "Drago",
-    surname: "Gochita",
-    email: "drago@example.com",
-    phoneNumber: "+123 456 7890",
-  };
+  const { id } = useParams<{ id: string }>();
+  const [realEstate, setRealEstate] = useState<RealEstate | null>(null);
+  const [agent, setAgent] = useState<Agent | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Fetch real estate and agent data by ID
+    const fetchDetails = async () => {
+      try {
+        const fetchedRealEstate = await getRealEstateById(Number(id));
+        setRealEstate(fetchedRealEstate);
+
+        const agents = await getAgents();
+        const matchedAgent = agents.find((agent) => agent.id === fetchedRealEstate.agent_id); // Adjust if agent_id exists
+        setAgent(matchedAgent || null);
+      } catch (err) {
+        console.error(err); // Log the error
+        setError("Failed to fetch real estate details.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchDetails();
+  }, [id]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  if (!realEstate || !agent) {
+    return <div>Real estate details not available</div>;
+  }
+
   return (
     <div className="p-8">
-      <HomeDetailsCard
-        imageUrl="https://images.pexels.com/photos/2079451/pexels-photo-2079451.jpeg"
-        publishData="08/08/24"
-        price="80,000 ₾"
-        location="Tbilisi, Georgia"
-        bedroomIcon="/icon-bed.png"
-        areaIcon="/icon-area.png"
-        postcodeIcon="/icon-post-code.png"
-        description="იყიდება ბინა ჭავჭავაძის ქუჩაზე, ვაკეში. ბინა არის ახალი რემონტით, ორი საძინებლითა და დიდი აივნებით. მოწყობილია ავეჯითა და ტექნიკით. 
-
-"
-        agentInfo="John Doe, Agent, +123 456 7890"
-        agent={agent}
-      />
+      <HomeDetailsCard realEstate={realEstate} agent={agent} />
+      <CardCarousel />
     </div>
   );
 };

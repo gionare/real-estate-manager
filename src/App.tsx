@@ -1,27 +1,36 @@
 // import { useState } from 'react'
 import "./App.css";
-import AddListingForm from "./components/AddListingPage/AddListing";
-import CardCarousel from "./components/HomeDetailsPage/CardCarousel";
+// import AddListingForm from "./components/AddListingPage/AddListing";
+// import HomeDetails from "./components/HomeDetailsPage/HomeDetails";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Template from "./components/Layout/Template";
+import HomePage from "./pages/HomePage";
 import HomeDetails from "./components/HomeDetailsPage/HomeDetails";
-import AddButtons from "./components/HomePage/AddButtons";
-import CardGrid from "./components/HomePage/CardGrid";
-import Filters from "./components/HomePage/Filters";
-import Header from "./components/Layout/Header";
+import AddListing from "./components/AddListingPage/AddListing";
 
-function App() {
+// function App() {
+//   return (
+//     <div>
+
+//       <HomeDetails />
+
+//       <AddListingForm />
+//     </div>
+//   );
+// }
+
+const App = () => {
   return (
-    <div>
-      <Header />
-      <div className="flex justify-between items-center w-full border ">
-        <Filters />
-        <AddButtons />
-      </div>
-      <CardGrid />
-      <HomeDetails />
-      <CardCarousel />
-      <AddListingForm />
-    </div>
+    <Router>
+      <Template>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/homedetails/:id" element={<HomeDetails />} />
+          <Route path="/AddListing" element={<AddListing />} />
+        </Routes>
+      </Template>
+    </Router>
   );
-}
+};
 
 export default App;

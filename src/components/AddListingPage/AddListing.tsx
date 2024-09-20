@@ -23,9 +23,7 @@ const schema = yup.object({
   image: yup
     .mixed<File>()
     .required("ატვირთეთ ფოტო")
-    .test("fileType", "აირჩიეთ სურათის სწორი ტიპი (.jpg, .png)", (value) => {
-      return value && ["image/jpeg", "image/png"].includes(value.type);
-    })
+
     .test("fileType", "აირჩიეთ სურათის სწორი ტიპი (.jpg, .png)", (value) => {
       console.log(value); // Check the file type in the console
       return value && ["image/jpeg", "image/png"].includes(value.type);
@@ -95,6 +93,9 @@ const AddListingForm: React.FC = () => {
     formData.append("description", data.description);
     formData.append("agent_id", data.agent_id.toString());
     formData.append("image", data.image);
+    if (data.image) {
+      formData.append("image", data.image);
+    }
 
     const AUTH_TOKEN = "9d011621-10af-4128-ba0d-27fb1331419e";
 

@@ -29,6 +29,7 @@ interface HomeDetailsCardProps {
 
 const HomeDetailsCard: React.FC<HomeDetailsCardProps> = ({ realEstate, agent }) => {
   const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
+  const [showFullDescription, setShowFullDescription] = useState(false); // State to toggle full description
 
   const handleDeleteClick = () => {
     setIsModalOpen(true);
@@ -40,6 +41,10 @@ const HomeDetailsCard: React.FC<HomeDetailsCardProps> = ({ realEstate, agent }) 
 
   const handleSuccess = () => {
     console.log("Real estate deleted successfully");
+  };
+
+  const toggleDescription = () => {
+    setShowFullDescription((prev) => !prev); // Toggle the description state
   };
 
   return (
@@ -63,36 +68,41 @@ const HomeDetailsCard: React.FC<HomeDetailsCardProps> = ({ realEstate, agent }) 
         <div className="w-[338px] self-stretch flex-grow-0 font-fira-go text-left flex flex-col gap-[16px] ">
           {/* Price */}
           <div className="">
-            <span className="h-[58px] self-stretch text-[48px] font-bold leading-normal text-[#021526]">{realEstate.price}</span>
+            <span className="h-[58px] self-stretch text-[48px] font-bold leading-normal text-[#021526]">{realEstate.price} ლ</span>
           </div>
           {/* Location Frame */}
           <div className=" flex items-center gap-[6px]">
             <img src="/Icon.png" alt="Location Icon" className="object-contain p-[2px_3px_1.1px_3px]" />
-            <span className=" h-[28px] text-[24px] font-normal leading-normal text-mutedText">{realEstate.address}</span>
+            <span className=" h-[25px] text-[23px] font-normal leading-normal text-mutedText">{realEstate.address}</span>
           </div>
           {/* Item 1 */}
           <div className="flex-grow-0 flex flex-row justify-start items-center gap-[6px] p-0">
             <img src="/icon-area.png" alt="bed" className="w-[21px]" />
-            <span className=" h-[28px] text-[24px] font-normal leading-normal text-mutedText"> ფართი {realEstate.area} მ ²</span>
+            <span className=" h-[25px] text-[23px] font-normal leading-normal text-mutedText"> ფართი {realEstate.area} მ ²</span>
           </div>
           {/* Item 2 */}
           <div className="flex-grow-0 flex flex-row justify-start items-center gap-[6px] p-0">
             <img src="/icon-bed.png" alt="area" className="w-[21px]" />
-            <span className=" h-[28px] text-[24px] font-normal leading-normal text-mutedText">საძინებელი {realEstate.bedrooms}</span>
+            <span className=" h-[25px] text-[23px] font-normal leading-normal text-mutedText">საძინებელი {realEstate.bedrooms}</span>
           </div>
           {/* Item 3 */}
           <div className="flex-grow-0 flex flex-row justify-start items-center gap-[6px] p-0">
             <img src="/icon-post-code.png" alt="postcode" className="w-[21px]" />
-            <span className=" h-[28px] text-[24px] font-normal leading-normal text-mutedText">საფოსტო ინდექსი {realEstate.zip_code}</span>
+            <span className=" h-[25px] text-[23px] font-normal leading-normal text-mutedText">საფოსტო ინდექსი {realEstate.zip_code}</span>
           </div>
         </div>
 
-        {/* Description */}
+        {/* Description Section */}
         <div className="">
-          <p className="self-stretch text-[16px] font-normal leading-[1.63] text-mutedText">{realEstate.description}</p>
+          <p className={`self-stretch text-[16px] font-normal leading-[1.63] text-mutedText ${!showFullDescription ? "line-clamp-3" : ""}`}>
+            {realEstate.description}
+          </p>
+          <button className="text-mutedText mt-2" onClick={toggleDescription}>
+            {showFullDescription ? "Show Less" : "Read More..."}
+          </button>
         </div>
 
-        <div className="">
+        <div className="h-[174px]">
           {/* Pass the agent info to the AgentInfo component */}
           <AgentInfo
             avatar={agent.avatar}
@@ -105,7 +115,7 @@ const HomeDetailsCard: React.FC<HomeDetailsCardProps> = ({ realEstate, agent }) 
         </div>
 
         {/* Delete Button */}
-        <div className="h-[37px] flex justify-center items-center gap-[10px] p-[10px] rounded-[8px] border border-[#676e76]">
+        <div className="h-[37px] flex justify-center items-center p-[10px] rounded-[8px] border border-[#676e76]">
           <button className="" onClick={handleDeleteClick}>
             ლისტინგის წაშლა
           </button>

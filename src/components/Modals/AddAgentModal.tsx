@@ -4,8 +4,8 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { addAgent } from "../../services/agentService";
 
-// Validation Schema
-const schema = yup.object({
+// Validation validationSchema
+const validationSchema = yup.object({
   name: yup.string().min(2, "მინიმუმ ორი სიმბოლო").required("სახელი აუცილებელია"),
   surname: yup.string().min(2, "მინიმუმ ორი სიმბოლო").required("გვარი აუცილებელია"),
   email: yup
@@ -46,7 +46,7 @@ const AddAgentModal: React.FC<AddAgentModalProps> = ({ isOpen, onClose, onAddAge
     control,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(validationSchema),
   });
 
   // Early return to handle conditional rendering

@@ -47,6 +47,15 @@ const HomeDetailsCard: React.FC<HomeDetailsCardProps> = ({ realEstate, agent }) 
     setShowFullDescription((prev) => !prev); // Toggle the description state
   };
 
+  const formatPrice = (price: number) => {
+    return (
+      new Intl.NumberFormat("en-US", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+      }).format(price) + " ₾"
+    );
+  };
+
   return (
     <div className="flex relative rounded-[14px] mt-14 gap-16">
       {/* Image Section */}
@@ -57,7 +66,9 @@ const HomeDetailsCard: React.FC<HomeDetailsCardProps> = ({ realEstate, agent }) 
           <span className=" text-[12px] font-medium text-white tracking-[0.48px] text-center">Rent</span>
         </div>
         <div>
-          <span className="flex justify-end mt-2 text-[16px] font-normal leading-[1.63] text-mutedText">გამოტვეყნების თარიღი {realEstate.created_at}</span>
+          <span className="flex justify-end mt-2 text-[16px] font-normal leading-[1.63] text-mutedText">
+            გამოტვეყნების თარიღი {new Date(realEstate.created_at).toLocaleDateString("en-GB")}
+          </span>
         </div>
       </div>
 
@@ -68,7 +79,7 @@ const HomeDetailsCard: React.FC<HomeDetailsCardProps> = ({ realEstate, agent }) 
         <div className="w-[338px] self-stretch flex-grow-0 font-fira-go text-left flex flex-col gap-[16px] ">
           {/* Price */}
           <div className="">
-            <span className="h-[58px] self-stretch text-[48px] font-bold leading-normal text-[#021526]">{realEstate.price} ლ</span>
+            <span className="h-[58px] self-stretch text-[48px] font-bold leading-normal text-[#021526]">{formatPrice(realEstate.price)}</span>
           </div>
           {/* Location Frame */}
           <div className=" flex items-center gap-[6px]">

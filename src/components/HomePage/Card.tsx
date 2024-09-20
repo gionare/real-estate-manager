@@ -14,10 +14,14 @@ const Card: React.FC<CardProps> = ({ realEstate }) => {
   };
 
   const { image, price, address, city } = realEstate;
+
+  // Check if image is a File object or a string
+  const imageUrl = typeof image === "string" ? image : URL.createObjectURL(image);
+
   return (
     <div className="w-[384px] h-[455px] relative rounded-[14px] border border-gray-300 shadow-[0_4px_8px_rgba(0,0,0,0.1)] mt-14" onClick={handleCardClick}>
       {/* Card image section */}
-      <img src={image} alt="Card Image" className="w-full h-[307px] rounded-t-[14px] object-cover" />
+      <img src={imageUrl} alt="Card Image" className="w-full h-[307px] rounded-t-[14px] object-cover" />
 
       {/* tag section */}
       <div className="absolute top-[23px] left-[23px] w-[90px] h-[26px] flex items-center justify-center gap-[10px] p-[6px] rounded-[15px] bg-[#021526]/50">

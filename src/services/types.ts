@@ -9,7 +9,7 @@ export interface Agent {
 }
 
 export interface RealEstate {
-  price: string;
+  price: number;
   zip_code: string;
   area: number;
   city_id: number;
@@ -18,7 +18,7 @@ export interface RealEstate {
   bedrooms: number;
   is_rental: number;
   description: string;
-  image: string;
+  image: File; // Define image as a File type
   created_at: string;
   id: number;
 

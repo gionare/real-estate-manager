@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import AgentInfo from "./AgentInfo";
 import { RealEstate, Agent } from "../../services/types";
+import DeleteListingModal from "../Modals/DeleteListingModal";
 
 // interface HomeDetailsCardProps {
 //   imageUrl: string;
@@ -27,6 +28,20 @@ interface HomeDetailsCardProps {
 }
 
 const HomeDetailsCard: React.FC<HomeDetailsCardProps> = ({ realEstate, agent }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
+
+  const handleDeleteClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleSuccess = () => {
+    console.log("Real estate deleted successfully");
+  };
+
   return (
     <div className="flex relative rounded-[14px] mt-14 gap-16">
       {/* Image Section */}
@@ -89,10 +104,20 @@ const HomeDetailsCard: React.FC<HomeDetailsCardProps> = ({ realEstate, agent }) 
           />
         </div>
 
-        {/* Button */}
+        {/* Delete Button */}
         <div className="h-[37px] flex justify-center items-center gap-[10px] p-[10px] rounded-[8px] border border-[#676e76]">
-          <button className="">ლისტინგის წაშლა</button>
+          <button className="" onClick={handleDeleteClick}>
+            ლისტინგის წაშლა
+          </button>
         </div>
+
+        {/* Delete Listing Modal */}
+        <DeleteListingModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          realEstateId={realEstate.id} // Pass real estate ID to the modal
+          onSuccess={handleSuccess}
+        />
       </div>
     </div>
   );

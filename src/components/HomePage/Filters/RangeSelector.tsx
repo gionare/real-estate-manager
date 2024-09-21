@@ -13,15 +13,26 @@ interface RangeSelectorProps {
   minLabel: string;
   maxLabel: string;
   type: "area" | "price";
+  onSelect: (low: string, high: string) => void; // New prop for selection
 }
 
-const RangeSelector: React.FC<RangeSelectorProps> = ({ presets, label, placeholderLow, placeholderHigh, minLabel, maxLabel, type }) => {
+const RangeSelector: React.FC<RangeSelectorProps> = ({
+  presets,
+  label,
+  placeholderLow,
+  placeholderHigh,
+  minLabel,
+  maxLabel,
+  type,
+  onSelect, // Destructure the new prop
+}) => {
   const [lowValue, setLowValue] = useState("");
   const [highValue, setHighValue] = useState("");
 
   const handlePresetClick = (low: string, high: string) => {
     setLowValue(low);
     setHighValue(high);
+    onSelect(low, high); // Call onSelect when a preset is selected
   };
 
   return (
@@ -60,11 +71,28 @@ const RangeSelector: React.FC<RangeSelectorProps> = ({ presets, label, placehold
             >
               <span>{preset.low}</span>
               <span>
-                {preset.high} {type === "price" ? "₾" : "მ²"}
+                {preset.high} {type === "price" ? "" : ""}
               </span>
             </button>
           ))}
         </div>
+      </div>
+
+      {/* Display selected values */}
+      <div className="mt-4">
+        <span className="text-sm">
+          Selected: {lowValue} - {highValue || "None"}
+          <button
+            onClick={() => {
+              setLowValue("");
+              setHighValue("");
+              onSelect("", "");
+            }}
+            className="ml-2 text-red-500"
+          >
+            X
+          </button>
+        </span>
       </div>
     </div>
   );

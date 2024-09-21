@@ -2,9 +2,10 @@ import React, { useState } from "react";
 
 interface BedroomsCategoryProps {
   onSelect: (value: number | "") => void;
+  onClose: () => void; // Add a new prop for closing the popup
 }
 
-const BedroomsCategory: React.FC<BedroomsCategoryProps> = ({ onSelect }) => {
+const BedroomsCategory: React.FC<BedroomsCategoryProps> = ({ onSelect, onClose }) => {
   const [bedrooms, setBedrooms] = useState<number | "">("");
 
   const handleBedroomChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -14,6 +15,7 @@ const BedroomsCategory: React.FC<BedroomsCategoryProps> = ({ onSelect }) => {
 
   const handleSelectClick = () => {
     onSelect(bedrooms);
+    onClose(); // Close the popup after selection
   };
 
   return (

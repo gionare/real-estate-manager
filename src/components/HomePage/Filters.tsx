@@ -1,6 +1,6 @@
 // import React from "react";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import PriceCategory from "./Filters/PriseCategory";
 
 const FilterComponent = () => {

@@ -20,6 +20,7 @@ const AddRealEstateForm: React.FC = () => {
     is_rental: 0, // 0 for sale, 1 for rent
     agent_id: 0,
   });
+  const [isDescriptionValid, setIsDescriptionValid] = useState(true); // Validation state for description
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -29,6 +30,12 @@ const AddRealEstateForm: React.FC = () => {
       setFormData((prev) => ({ ...prev, [name]: parseInt(value) }));
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
+    }
+
+    // Validate description for five words
+    if (name === "description") {
+      const wordCount = value.trim().split(/\s+/).length;
+      setIsDescriptionValid(wordCount >= 5);
     }
   };
 
@@ -55,6 +62,11 @@ const AddRealEstateForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isDescriptionValid) {
+      alert("Description must contain at least five words.");
+      return;
+    }
+
     try {
       const responseData = await addRealEstate(formData);
       alert("Real estate added successfully!");
@@ -67,7 +79,7 @@ const AddRealEstateForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 max-w-4xl mx-auto p-4 mb-28">
+    <form onSubmit={handleSubmit} className="space-y-8 max-w-4xl mx-auto p-4 mb-28">
       <h1 className="text-[32px] font-medium leading-normal text-[#021526] text-center mb-8">ლისტინგის დამატება</h1>
 
       <div>
@@ -185,12 +197,22 @@ const AddRealEstateForm: React.FC = () => {
           onChange={handleChange}
           required
         />
-        <span className="font-fira text-sm tracking-tight">✔️ მინიმუმ ხუთი სიტყვა</span>
+        {!isDescriptionValid && <span className="text-red-500 text-sm font-fira tracking-tight">✔️ მინიმუმ ხუთი სიტყვა</span>}
       </div>
 
+      {/* Image Upload Field */}
       <div>
-        <label htmlFor="image">Image:</label>
-        <input type="file" name="image" id="image" onChange={handleFileChange} accept="image/*" required />
+        <label className="block mb-2">ატვირთეთ ფოტო *</label>
+        <div className="Rectangle-47 h-[160px] flex items-center justify-center relative border-4 border-dotted">
+          <input type="file" id="image" onChange={handleFileChange} accept="image/*" className="absolute inset-0 opacity-0 cursor-pointer" required />
+          {formData.image ? (
+            <img src={URL.createObjectURL(formData.image)} alt="Uploaded" className="w-full h-full object-cover rounded" />
+          ) : (
+            <div className="flex flex-col items-center justify-center text-center">
+              <span className="text-4xl text-gray-400">⊕</span>
+            </div>
+          )}
+        </div>
       </div>
 
       <AgentSelector selectedAgentId={formData.agent_id} onAgentChange={handleAgentChange} />

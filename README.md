@@ -8,10 +8,10 @@
 
 <h1 align="center">Real Estate Manager <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/People/Thumbs%20Up.webp" alt="Thumbs Up" width="25" height="25" /></h1>
 
-![Version](https://img.shields.io/github/package-json/v/your-github-username/real-estate-manager)
-![Languages Count](https://img.shields.io/github/languages/count/your-github-username/real-estate-manager?color=56BEB8)
-![Top Language](https://img.shields.io/github/languages/top/your-github-username/real-estate-manager?color=56BEB8)
-![Repo Size](https://img.shields.io/github/repo-size/your-github-username/real-estate-manager?color=56BEB8)
+![Version](https://img.shields.io/github/package-json/v/gionare/real-estate-manager)
+![Languages Count](https://img.shields.io/github/languages/count/gionare/real-estate-manager?color=56BEB8)
+![Top Language](https://img.shields.io/github/languages/top/gionare/real-estate-manager?color=56BEB8)
+![Repo Size](https://img.shields.io/github/repo-size/gionare/real-estate-manager?color=56BEB8)
 
 ![React](https://img.shields.io/badge/React-17.0.2-blue)
 ![TypeScript](https://img.shields.io/badge/TypeScript-4.7-blue)

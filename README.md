@@ -1,6 +1,40 @@
-Real-estate-manager
+<div align="center" id="top"> 
+  <img src="https://user-images.githubusercontent.com/74038190/221352989-518609ab-b4d1-459e-929f-a08cd2bd9b3c.gif" alt="Real Estate Manager" width="250"/>
 
-Components Tree
+&#xa0;
+
+  <!-- <a href="https://your-demo-link.com">Demo</a> -->
+</div>
+
+<h1 align="center">Real Estate Manager <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/People/Thumbs%20Up.webp" alt="Thumbs Up" width="25" height="25" /></h1>
+
+![Version](https://img.shields.io/github/package-json/v/your-github-username/real-estate-manager)
+![Languages Count](https://img.shields.io/github/languages/count/your-github-username/real-estate-manager?color=56BEB8)
+![Top Language](https://img.shields.io/github/languages/top/your-github-username/real-estate-manager?color=56BEB8)
+![Repo Size](https://img.shields.io/github/repo-size/your-github-username/real-estate-manager?color=56BEB8)
+
+![React](https://img.shields.io/badge/React-17.0.2-blue)
+![TypeScript](https://img.shields.io/badge/TypeScript-4.7-blue)
+![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3.1.4-blue)
+
+<p align="center">
+  <a href="#dart-about">About</a> &#xa0; | &#xa0; 
+  <a href="#sparkles-features">Features</a> &#xa0; | &#xa0;
+  <a href="#rocket-technologies">Technologies</a> &#xa0; | &#xa0;
+  <a href="#white_check_mark-requirements">Requirements</a> &#xa0; | &#xa0;
+  <a href="#dart-about">Installation </a> &#xa0; | &#xa0; 
+  <a href="https://github.com/your-github-username" target="_blank">Author</a>
+</p>
+
+## <img src="https://user-images.githubusercontent.com/74038190/212284087-bbe7e430-757e-4901-90bf-4cd2ce3e1852.gif" width="30"> About
+
+Welcome to the Real Estate Manager project! This repository contains the codebase for a real estate management application, allowing users to add listings, view details, and manage properties effectively.
+
+## Features
+
+- User-friendly interface for adding listings
+- Agent selection and city/region dropdowns
+- Detailed view of properties
 
 - **components**
   - **`AddListingPage`**
@@ -63,7 +97,7 @@ GET real-estate by id
 ```
 {
   "id": 1,
-  "address": "შარტავას 2ა",
+  "address": "შარტავას 2ა", | address: string
   "zip_code": "0101",
   "price": 100000,
   "area": 100.5,
@@ -121,3 +155,5 @@ git push origin master
 ## React Router Implementation
 
 `npm install react-router-dom`
+
+## POST /real-estates Create a real estate

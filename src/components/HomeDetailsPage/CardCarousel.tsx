@@ -38,7 +38,7 @@ const CardCarousel: React.FC = () => {
   };
 
   return (
-    <div className="relative w-[1600px] border mb-36">
+    <div className="relative w-[1600px]  mb-36">
       {/* Title */}
       <div className="top-0 text-[#021526] text-left text-[32px]">
         <span>ბინები მსგავს ლოკაციაზე</span>
@@ -55,7 +55,7 @@ const CardCarousel: React.FC = () => {
       </button>
 
       {/* Carousel Container */}
-      <div className="flex overflow-hidden border">
+      <div className="flex overflow-hidden pb-2">
         <div
           className="flex transition-transform duration-300"
           style={{

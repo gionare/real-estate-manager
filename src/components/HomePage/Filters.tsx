@@ -3,7 +3,7 @@ import PriceCategory from "./Filters/PriseCategory";
 import AreaCategory from "./Filters/AreaCategory";
 import BedroomsCategory from "./Filters/BedroomCategory";
 
-const FilterComponent = () => {
+const FilterComponent = ({ onAreaSelect, onPriceSelect, onBedroomsSelect }) => {
   // States for each arrow and popup
   const [isPricePopupOpen, setPricePopupOpen] = useState(false);
   const [isAreaPopupOpen, setAreaPopupOpen] = useState(false);
@@ -17,6 +17,10 @@ const FilterComponent = () => {
   const [selectedArea, setSelectedArea] = useState<{ low: string; high: string }>({ low: "", high: "" });
   const [selectedPrice, setSelectedPrice] = useState<{ low: string; high: string }>({ low: "", high: "" });
   const [selectedBedrooms, setSelectedBedrooms] = useState<number | "">("");
+
+  const priceRef = useRef<HTMLDivElement>(null);
+  const areaRef = useRef<HTMLDivElement>(null);
+  const bedroomRef = useRef<HTMLDivElement>(null);
 
   const clearAllSelections = () => {
     clearPriceSelection();
@@ -35,10 +39,6 @@ const FilterComponent = () => {
   const clearPriceSelection = () => {
     setSelectedPrice({ low: "", high: "" });
   };
-
-  const priceRef = useRef<HTMLDivElement>(null);
-  const areaRef = useRef<HTMLDivElement>(null);
-  const bedroomRef = useRef<HTMLDivElement>(null);
 
   // Handlers for toggling specific dropdowns and arrows
   const toggleRegionArrow = () => {
@@ -82,12 +82,19 @@ const FilterComponent = () => {
   //   setBedroomPopupOpen(false); // Close the popup after selection
   // };
 
-  const handleAreaSelect = (low: string, high: string) => {
-    setSelectedArea({ low, high });
-  };
-
   const handlePriceSelect = (low: string, high: string) => {
     setSelectedPrice({ low, high });
+    onPriceSelect({ low, high }); // Pass to parent
+  };
+
+  const handleAreaSelect = (low: string, high: string) => {
+    setSelectedArea({ low, high });
+    onAreaSelect({ low, high }); // Pass to parent
+  };
+
+  const handleBedroomsSelect = (bedrooms: number | "") => {
+    setSelectedBedrooms(bedrooms);
+    onBedroomsSelect(bedrooms); // Pass to parent
   };
 
   useEffect(() => {
@@ -177,9 +184,10 @@ const FilterComponent = () => {
           {isBedroomPopupOpen && (
             <div className="absolute top-12 left-0 w-[382px] p-4 rounded z-10">
               <BedroomsCategory
-                onSelect={setSelectedBedrooms}
+                onSelect={handleBedroomsSelect} // This should now match the expected type
                 onClose={() => setBedroomPopupOpen(false)} // Close popup when button is pressed
               />
+              Z
             </div>
           )}
         </div>

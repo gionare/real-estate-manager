@@ -1,6 +1,7 @@
 import RangeSelector from "./RangeSelector";
 
 const pricePresets = [
+  { low: "1 ₾", high: "50,000 ₾" },
   { low: "50,000 ₾", high: "100,000 ₾" },
   { low: "100,000 ₾", high: "150,000 ₾" },
   { low: "150,000 ₾", high: "200,000 ₾" },

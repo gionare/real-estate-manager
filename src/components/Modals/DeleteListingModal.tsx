@@ -17,10 +17,10 @@ const DeleteListingModal: React.FC<DeleteListingModalProps> = ({ isOpen, onClose
       await deleteRealEstate(realEstateId);
       onSuccess(); // Notify parent component that deletion was successful
       onClose(); // Close the modal
+      navigate("/"); // Redirect to the homepage after deletion
     } catch (error) {
       console.error("Failed to delete the real estate:", error);
       alert("ლისტინგის წაშლა ვერ მოხერხდა!!!"); // Show error message if deletion fails
-      navigate("/"); // Redirect to the homepage after deletion
     }
   };
 

@@ -6,7 +6,7 @@ import CardGrid from "../components/HomePage/CardGrid";
 const HomePage: React.FC = () => {
   return (
     <div>
-      <div className="flex justify-between items-center w-full border ">
+      <div className="flex justify-between  w-full border ">
         <Filters />
         <AddButtons />
       </div>

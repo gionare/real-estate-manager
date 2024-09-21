@@ -46,7 +46,7 @@ const HomeDetails: React.FC = () => {
   }
 
   return (
-    <div className="p-8">
+    <div className="p-8 w-[1596px] mx-auto">
       <HomeDetailsCard realEstate={realEstate} agent={agent} />
       <CardCarousel />
     </div>

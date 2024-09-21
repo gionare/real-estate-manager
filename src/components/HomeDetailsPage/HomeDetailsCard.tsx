@@ -41,12 +41,12 @@ const HomeDetailsCard: React.FC<HomeDetailsCardProps> = ({ realEstate, agent }) 
   return (
     <div className="flex mt-14 gap-16">
       {/* Left Arrow Link */}
-      <Link to="/" className="absolute top-52 left-[187px] p-2 rounded-full bg-white ">
-        <img src="/icon-right.webp" alt="Back" className="w-7 h-7" />
-      </Link>
 
       {/* Image Section */}
       <div className="flex-none w-[839px] h-[670px] relative">
+        <Link to="/" className="absolute top-[-52px] left-[-5px] p-2 rounded-full bg-white ">
+          <img src="/icon-right.webp" alt="Back" className="w-7 h-7" />
+        </Link>
         <img
           src={typeof realEstate.image === "string" ? realEstate.image : URL.createObjectURL(realEstate.image)}
           alt="Home"

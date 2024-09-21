@@ -1,12 +1,12 @@
 <div align="center" id="top"> 
-  <img src="https://user-images.githubusercontent.com/74038190/221352989-518609ab-b4d1-459e-929f-a08cd2bd9b3c.gif" alt="Real Estate Manager" width="250"/>
+  <!-- <img src="https://user-images.githubusercontent.com/74038190/221352989-518609ab-b4d1-459e-929f-a08cd2bd9b3c.gif" alt="Real Estate Manager" width="250"/> -->
 
 &#xa0;
 
   <!-- <a href="https://your-demo-link.com">Demo</a> -->
 </div>
 
-<h1 align="center">Real Estate Manager <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/People/Thumbs%20Up.webp" alt="Thumbs Up" width="25" height="25" /></h1>
+<h1 align="center">Real Estate Manager / Redberry Project <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/People/Thumbs%20Up.webp" alt="Thumbs Up" width="25" height="25" /></h1>
 
 ![Version](https://img.shields.io/github/package-json/v/gionare/real-estate-manager)
 ![Languages Count](https://img.shields.io/github/languages/count/gionare/real-estate-manager?color=56BEB8)
@@ -30,33 +30,45 @@
 
 Welcome to the Real Estate Manager project! This repository contains the codebase for a real estate management application, allowing users to add listings, view details, and manage properties effectively.
 
-## Features
+# Features & Technologies
 
-- User-friendly interface for adding listings
-- Agent selection and city/region dropdowns
-- Detailed view of properties
+The following tools were used in this project:
 
-- **components**
-  - **`AddListingPage`**
-    - AddListing.tsx
-    - AgentSelector.tsx
-    - CityDropdown.tsx
-    - RegionDropdown.tsx
-  - **`HomeDetailsPage`**
-    - AgentInfo.tsx
-    - CardCarousel.tsx
-    - HomeDetails.tsx
-    - HomeDetailsCard.tsx
-  - **`HomePage`**
-    - AddButtons.tsx
-    - Card.tsx
-    - CardGrid.tsx
-    - Filters.tsx
-    - RentOrSale.tsx
-  - **`Layout`**
-    - Header.tsx
-  - **`Modals`**
-    - AddAgentModal.tsx
+- [React](https://pt-br.reactjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+
+## backend <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Animals%20and%20Nature/New%20Moon.webp" alt="New Moon" width="25" height="25" />
+
+- https://api.real-estate-manager...
+
+## API Endpoints
+
+- `GET /real-estates`: Fetches all real estate listings.
+- `GET /real-estates/:id`: Fetches a specific listing by ID.
+- `POST /real-estates`: Adds a new real estate listing.
+
+## **components tree**
+
+- **`AddListingPage`**
+  - AddListing.tsx
+  - AgentSelector.tsx
+  - CityDropdown.tsx
+  - RegionDropdown.tsx
+- **`HomeDetailsPage`**
+  - AgentInfo.tsx
+  - CardCarousel.tsx
+  - HomeDetails.tsx
+  - HomeDetailsCard.tsx
+- **`HomePage`**
+  - AddButtons.tsx
+  - Card.tsx
+  - CardGrid.tsx
+  - Filters.tsx
+  - RentOrSale.tsx
+- **`Layout`**
+  - Header.tsx
+- **`Modals`**
+  - AddAgentModal.tsx
 - **`containers`**
 - **`index.css`**
 - **`main.tsx`**
@@ -68,31 +80,8 @@ Welcome to the Real Estate Manager project! This repository contains the codebas
   - realEstates.ts
   - types.ts
 - **`styles`**
-- **`vite-env.d.ts`**
 
-API token: `
-9d011621-10af-4128-ba0d-27fb1331419e`
-zogadad inaxeba ENV shi
-
-```
-API POST real estate
-{
-"price": "100000",
-"zip_code": "0101",
-"area": "100.5",
-"city_id": "1",
-"address": "დრაკოლოს 77ა",
-"agent_id": "217",
-"bedrooms": "2",
-"is_rental": "0",
-"description": "სახლი ლიანდაგთან",
-"image": "https://api.real-estate-manager.redberryinternship.ge/storage/images/8gzAYZ3QVKmp80aaJNXUlmkduKSU5P2g5qASrDvh.jpg",
-"created_at": "2024-09-14T02:35:08.000000Z",
-"id": 249
-}
-```
-
-GET real-estate by id
+## GET real-estate by id
 
 ```
 {
@@ -127,9 +116,11 @@ GET real-estate by id
 }
 ```
 
-## npm install react-hook-form yup @hookform/resolvers
+## npm installs
 
-## To create a new branch, work on it, and later merge it back into your main branch
+- react-hook-form yup @hookform/resolvers
+
+## Working on Github Branches
 
 ```bash
 # Create and switch to new branch
@@ -156,4 +147,21 @@ git push origin master
 
 `npm install react-router-dom`
 
-## POST /real-estates Create a real estate
+## Future Improvements
+
+- [ ] Add user authentication
+- [ ] Implement map integration for location-based searches
+- [ ] Improve mobile responsiveness
+
+## Authors
+
+UI/UX Designer | Front-End Developer <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/People/Technologist.webp" alt="Technologist" width="25" height="25" />
+
+### [Giorgi Nareklishvili](https://github.com/gionare) - [@gionare](https://github.com/gionare)
+
+<img src="https://user-images.githubusercontent.com/74038190/212284158-e840e285-664b-44d7-b79b-e264b5e54825.gif">
+
+## Acknowledgements
+
+- Project by [Redberry](https://redberry.ge)
+- [React](https://reactjs.org) and [TypeScript](https://www.typescriptlang.org)
